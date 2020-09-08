@@ -45,6 +45,7 @@ textarea{
   background-color: transparent;
   color: #ffffff;
   font-weight: bolder;
+  width: 100%;
   padding-top: 10px;
   border-right: 1px solid #ffffff;
 }
