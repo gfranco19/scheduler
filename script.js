@@ -1,22 +1,75 @@
-var currentDAy = document.querySelector("#currentDay");
-var  nine = document.querySelector(".9am");
-var ten = document.querySelector(".10am");
-var eleven = document.querySelector(".11am");
-var twelve = document.querySelector(".12pm");
-var one = document.querySelector(".1pm");
-var two = document.querySelector(".2pm");
-var three = document.querySelector(".3pm");
-var four = document.querySelector(".4pm");
-var five = document.querySelector(".5pm");
-var save = document.querySelector(".saveBtn");
-//show current date and time on top
-var today = new Date();
-var dd = String(today.getDate()).padStart(2, '0');
-var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-var yyyy = today.getFullYear();
 
-today = mm + '/' + dd + '/' + yyyy;
-currentDAy.textContent = today;
- console.log(today);
 
-// store in localStorage.
+var idsCollection = ["#9", "#10", "#11", "#12", "#1", "#2", "#3", "#4",  "#5"];
+var timeSlotCollection = ["09:00:00", "10:00:00", "11:00:00", "12:00:00", "13:00:00",  "14:00:00",  "15:00:00",  "16:00:00",  "17:00:00"];
+var shiftedTimeSlotCollection = ["10:00:00", "11:00:00", "12:00:00", "13:00:00",  "14:00:00",  "15:00:00",  "16:00:00",  "17:00:00"];
+
+var  plannerContent = [];
+var getLocalStorageData = JSON.parse(localStorage.getItem("planner-items"));
+
+if (getLocalStorageData !== null) {
+ plannerContent = getLocalStorageData;
+}
+
+
+
+
+
+//momment.js function that finds the ids and buttons to add a class to disable the tasks that are overdue
+function timeBlock(){
+for (var i=0;i<idsCollection.length; i++) {
+  var descriptionEl = $(idsCollection[i]);
+  var buttonEl = descriptionEl.find("button");
+  if ((moment().format('MMMM Do YYYY, HH:mm:ss')) < (moment().format('MMMM Do YYYY') +  ", " + timeSlotCollection[i])) { 
+    descriptionEl.attr("class", "future");
+
+    //The forEach() method executes a provided function once for each array element.
+
+    plannerContent.forEach(function(item) {
+      if (idsCollection[i] === ("#" + (item["input-id"]))) {
+        descriptionEl.val(item["input-value"]);
+      }
+    });
+  }
+  else if (((moment().format('MMMM Do YYYY, HH:mm:ss')) >= (moment().format('MMMM Do YYYY') +  ", " + timeSlotCollection[i])) &&  
+          ((moment().format('MMMM Do YYYY, HH:mm:ss')) < (moment().format('MMMM Do YYYY') +  ", " + shiftedTimeSlotCollection[i])))
+  {
+    descriptionEl.attr("class", "present");
+    $(".present").attr("disabled", "disabled");
+    buttonEl.attr("disabled", true);
+     //The forEach() method executes a provided function once for each array element.
+    plannerContent.forEach(function(item) {
+      if (idsCollection[i] === ("#" + item["input-id"])) {
+        descriptionEl.val(item["input-value"]);
+      }
+    });
+  }
+  else if ((moment().format('MMMM Do YYYY, HH:mm:ss')) > (moment().format('MMMM Do YYYY') +  ", " + timeSlotCollection[i])) {
+    descriptionEl.attr("class", "past");
+    $(".past").attr("disabled", "disabled");
+    buttonEl.attr("disabled", true);
+  }
+}
+}
+
+
+
+
+
+
+//gets the input value and stores it in the local storage
+$("button").on("click", function() {
+  var container = $(this).parent(); 
+  var inputValue = container.find("input").val();
+  var inputId = container.find("input").attr("id");
+  var textObj = {
+    "input-id": inputId,
+    "input-value": inputValue };
+  
+  if (textObj["input-value"] !== "") {
+    plannerContent.push(textObj);
+    localStorage.setItem("planner-items", JSON.stringify(plannerContent));
+  }
+});
+
+timeBlock();

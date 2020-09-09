@@ -4,7 +4,7 @@ body {
   line-height: 1;
 }
 
-textarea{
+input{
   background: transparent;
   margin-top: 10px;
   width: 100%;
@@ -23,26 +23,8 @@ textarea{
   border-bottom: 10px solid rgb(34, 59, 92);
 }
 
-.description{
-  white-space: pre-wrap;
-}
-
-.time-block{
-  text-align: center;
-  border-radius: 15px;
-}
-
-.row {
-  white-space: pre-wrap;
-  height: 80px;
-  background-color: rgba(42, 71, 133, 0.603);
-  border-top: 1px solid white;
-  justify-items: center;
-  
-}
-
 .hour {
-  background-color: transparent;
+  background-color: rgb(74, 74, 109);
   color: #ffffff;
   font-weight: bolder;
   width: 100%;
@@ -52,17 +34,27 @@ textarea{
 
 .past {
   background-color: #4b494980;
-  color: white;
+  border-top: 1px solid white;
+  white-space: pre-wrap;
+  height: 80px;
+  width: 100%;
+  justify-items: center;
 }
 
 .present {
   background-color: #5a4d6b;
-  color: white;
+  border-top: 1px solid white;
+  white-space: pre-wrap;
+  height: 80px;
+  justify-items: center;
 }
 
 .future {
   background-color: #729b8f;
-  color: white;
+  border-top: 1px solid white;
+  white-space: pre-wrap;
+  height: 80px;
+  justify-items: center;
 }
 
 .saveBtn {
