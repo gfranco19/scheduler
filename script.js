@@ -63,7 +63,7 @@ for (var i=0;i<inputIds.length; i++) {
 
 
 //gets the input value and stores it in the local storage when button is clicked
-$("button").on("click", function() {
+$(".saveBtn").on("click", function() {
   var dummy = $(this).parent(); 
   var inputVal = dummy.find("input").val();
   var inputId = dummy.find("input").attr("id");
@@ -78,3 +78,4 @@ $("button").on("click", function() {
 });
 
 timeBlock();
+
